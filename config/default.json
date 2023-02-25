@@ -1,0 +1,13 @@
+{
+  "App": {
+    "port": 3000,
+    "database": {
+      "mongoUrl": "mongodb://127.0.0.1:27017/usuarios"
+    },
+    "auth": {
+      "key": "some-key",
+      "tokenExpiresIn": 1000000000
+    },
+    "resources": {}
+  }
+}
