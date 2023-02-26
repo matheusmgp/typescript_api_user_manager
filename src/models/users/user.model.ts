@@ -1,8 +1,9 @@
 import mongoose, { Document, Model } from 'mongoose';
 import { AuthService } from '@src/services/auth.service';
+import { BaseModel } from '../base.model';
 
-export interface User {
-  _id?: string;
+export interface User extends BaseModel {
+  //_id?: string;
   name: string;
   email: string;
   password: string;

@@ -22,5 +22,6 @@ export class UserRoutes {
     this.router.get('/user', AuthMiddleware, this.paginationValidation, this.controller.getAll);
     this.router.get('/user/:id', AuthMiddleware, this.paramsValidation, this.controller.getById);
     this.router.post('/user', AuthMiddleware, this.createValidation, this.controller.create);
+    this.router.patch('/user/:id', AuthMiddleware, this.controller.update);
   }
 }

@@ -14,15 +14,19 @@ export class UserController {
     };
 
     const result = await UserService.getAll(pagination);
-    res.status(StatusCodes.OK).json(result);
+    if (result) {
+      BaseController.httpResponseList(result, 'get', res, StatusCodes.OK);
+    } else {
+      BaseController.httpResponse(result, 'get', res, StatusCodes.OK);
+    }
   }
 
   public async getById(req: Request, res: Response): Promise<void> {
     const result = await UserService.getById(req.params.id);
     if (result) {
-      res.status(StatusCodes.OK).json(result);
+      BaseController.httpResponse(result, 'get', res, StatusCodes.OK);
     } else {
-      res.status(StatusCodes.NOT_FOUND).json({ message: 'no record found' });
+      BaseController.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
     }
   }
 
@@ -30,6 +34,15 @@ export class UserController {
     try {
       const response = await UserService.create(req.body);
       res.status(StatusCodes.CREATED).json(response);
+    } catch (error: any) {
+      BaseController.sendCreateUpdateErrorResponse(res, error);
+    }
+  }
+
+  public async update(req: Request, res: Response): Promise<void> {
+    try {
+      const response = await UserService.update(req.params.id, req.body);
+      res.status(StatusCodes.OK).json(response);
     } catch (error: any) {
       BaseController.sendCreateUpdateErrorResponse(res, error);
     }
