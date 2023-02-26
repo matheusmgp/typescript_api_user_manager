@@ -1,7 +1,8 @@
 export interface IPagination {
-  skip: string;
-  limit: string;
+  skip: number;
+  limit: number;
+  filter: string;
 }
 export interface IParams {
-  id: number;
+  id: string;
 }

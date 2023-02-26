@@ -1,31 +1,21 @@
 import { User } from '@src/models/users/user.model';
+import { UserRepository } from '@src/repositories/users/user.repository';
+import { IPagination } from '@src/models/pagination/pagination.model';
 
 const create = async (payload: User): Promise<User> => {
-  let result: User = {
-    name: '',
-    email: '',
-    password: '',
-  };
-  try {
-    const user = new User(payload);
-    result = await user.save();
-  } catch (error: any) {
-    console.log(error);
-  }
-  return result;
+  return await UserRepository.create(payload);
 };
 
-const get = async (): Promise<User[] | undefined> => {
-  let result: User[] = [];
-  try {
-    result = await User.find({});
-  } catch (error: any) {
-    console.log(error);
-  }
-  return result;
+const getAll = async (pagination: IPagination): Promise<User[] | undefined> => {
+  return await UserRepository.getAll(pagination);
+};
+
+const getById = async (id: string): Promise<User | null> => {
+  return await UserRepository.getById(id);
 };
 
 export const UserService = {
-  get,
+  getAll,
   create,
+  getById,
 };

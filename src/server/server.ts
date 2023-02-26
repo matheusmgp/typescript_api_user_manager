@@ -24,7 +24,6 @@ export class SetupServer {
   private async databaseSetup(): Promise<void> {
     await database.connect();
   }
-
   public async close(): Promise<void> {
     await database.close();
   }
