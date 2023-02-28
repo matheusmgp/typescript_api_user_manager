@@ -1,7 +1,6 @@
 import { IPagination } from '@src/models/pagination/pagination.model';
 import { ResultListModel, ResultModel } from '@src/models/result.list.model';
 import { User } from '@src/models/users/user.model';
-import { HelperService } from '@src/util/helpers/is-valid-object-id';
 import { IUserRepository } from '../interfaces/user.interface.repository';
 
 export class UsersRepository implements IUserRepository<User> {
@@ -24,10 +23,6 @@ export class UsersRepository implements IUserRepository<User> {
     return result;
   }
   async getById(id: string): Promise<ResultModel<User>> {
-    if (!HelperService.checkIfObjectIdIsValid(id)) {
-      throw Error('ID inválida.');
-    }
-
     const result: ResultModel<User> = {
       data: await User.findOne({ _id: id }),
     };
@@ -51,7 +46,6 @@ export class UsersRepository implements IUserRepository<User> {
     return result;
   }
   async update(id: string, payload: User): Promise<ResultModel<User>> {
-    if (!HelperService.checkIfObjectIdIsValid(id)) throw Error('ID inválida.');
     const updated = await User.findByIdAndUpdate(id, payload);
     const result: ResultModel<User> = {
       data: updated,
