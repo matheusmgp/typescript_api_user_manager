@@ -1,6 +1,10 @@
 import { BaseController } from '@src/controllers/base.controller';
 import { paginationSchema } from '@src/controllers/validations/pagination/pagination.validation';
-import { userCreateSchema, userParamsSchema } from '@src/controllers/validations/users/user.validation';
+import {
+  userCreateSchema,
+  userParamsSchema,
+  userUpdateSchema,
+} from '@src/controllers/validations/users/user.validation';
 import { validation } from '@src/shared/middleware';
 import { AuthMiddleware } from '@src/shared/middleware/auth.middleware';
 import express, { Request, Response, Router } from 'express';
@@ -12,7 +16,7 @@ export class UserRoutes {
   private paginationValidation = validation({ query: paginationSchema });
   private createValidation = validation({ body: userCreateSchema });
   private paramsValidation = validation({ params: userParamsSchema });
-
+  private updateValidation = validation({ body: userUpdateSchema });
   constructor() {
     this.router = express.Router();
     this.registerRoutes();
@@ -25,7 +29,7 @@ export class UserRoutes {
 
     this.router.post('/user', /*AuthMiddleware,*/ this.createValidation, this.create);
 
-    this.router.patch('/user/:id', /*AuthMiddleware,*/ this.update);
+    this.router.patch('/user/:id', /*AuthMiddleware,*/ this.updateValidation, this.paramsValidation, this.update);
   }
 
   private async getAll(req: Request, res: Response): Promise<void> {
@@ -68,16 +72,16 @@ export class UserRoutes {
 
       BaseController.httpResponse(result.data, 'post', res, StatusCodes.CREATED);
     } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'post', res, StatusCodes.CONFLICT);
+      BaseController.httpExceptionResponse(err.message, 'post', res, err.code);
     }
   }
   private async update(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
       result = await resolveUsersDependencies().userController.update(req.params.id, req.body);
-      BaseController.httpResponse(result.data, 'post', res, StatusCodes.OK);
+      BaseController.httpResponse(result.data, 'patch', res, StatusCodes.OK);
     } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'patch', res, StatusCodes.BAD_REQUEST);
+      BaseController.httpExceptionResponse(err.message, 'patch', res, err.code);
     }
   }
 }

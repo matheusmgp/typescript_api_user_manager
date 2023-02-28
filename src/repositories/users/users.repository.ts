@@ -39,6 +39,7 @@ export class UsersRepository implements IUserRepository<User> {
   async create(payload: User): Promise<ResultModel<User>> {
     const user = new User(payload);
     const saved = await user.save();
+    console.log(saved._id);
 
     const result: ResultModel<User> = {
       data: saved,

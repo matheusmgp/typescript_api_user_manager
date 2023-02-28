@@ -8,6 +8,12 @@ export const userCreateSchema: Schema<User> = object({
   password: string().required().min(8).max(8),
 });
 
+export const userUpdateSchema: Schema<User> = object({
+  name: string().required().min(5).max(20),
+  email: string().email().required(),
+  password: string().required().min(8).max(8),
+});
+
 export const userParamsSchema: Schema<IParams> = object({
   id: string().required(),
 });

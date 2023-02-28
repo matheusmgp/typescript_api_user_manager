@@ -1,8 +1,11 @@
 import { Types } from 'mongoose';
 
 const checkIfObjectIdIsValid = (id: string) => {
-  const result = Types.ObjectId.isValid(id);
-  return result;
+  if (Types.ObjectId.isValid(id)) {
+    if (String(new Types.ObjectId(id)) === id) return true;
+    return false;
+  }
+  return false;
 };
 
 export const HelperService = {

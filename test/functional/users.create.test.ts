@@ -2,6 +2,19 @@ import { User } from '@src/models/users/user.model';
 import { AuthService } from '@src/services/auth.service';
 
 describe('User functional tests', () => {
+  const defaultUser = {
+    name: 'Default User',
+    email: 'default@default.com',
+    password: '10101010',
+  };
+  let token: string;
+
+  beforeEach(async () => {
+    await User.deleteMany({});
+    const user = await new User(defaultUser).save();
+
+    token = AuthService.generateToken(user.toJSON());
+  });
   describe('When creating a new user', () => {
     beforeAll(async () => await User.deleteMany({}));
     it('should successfully create a new user with encrypted password', async () => {
@@ -11,7 +24,7 @@ describe('User functional tests', () => {
         password: '10101010',
       };
 
-      const response = await global.testRequest.post('/user').send(newUser);
+      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(201);
       await expect(AuthService.comparePassword(newUser.password, response.body.data.password)).resolves.toBeTruthy();
@@ -27,7 +40,7 @@ describe('User functional tests', () => {
         email: 'john@mail.com',
         password: '10101010',
       };
-      const response = await global.testRequest.post('/user').send(newUser);
+      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -42,7 +55,7 @@ describe('User functional tests', () => {
         name: 'Teste legal',
         password: '10101010',
       };
-      const response = await global.testRequest.post('/user').send(newUser);
+      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -57,7 +70,7 @@ describe('User functional tests', () => {
         name: 'Teste legal',
         email: 'john@mail.com',
       };
-      const response = await global.testRequest.post('/user').send(newUser);
+      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -74,7 +87,7 @@ describe('User functional tests', () => {
         password: '10101010',
       };
       await global.testRequest.post('/user').send(newUser);
-      const response = await global.testRequest.post('/user').send(newUser);
+      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(409);
       expect(response.body).toEqual(
@@ -86,6 +99,7 @@ describe('User functional tests', () => {
       );
     });
   });
+
   describe('When authenticating a user', () => {
     it('should generate a token for a valid user', async () => {
       const newUser = {
