@@ -4,10 +4,10 @@ import { IPagination } from '@src/models/pagination/pagination.model';
 import { ResultListModel, ResultModel } from '@src/models/result.list.model';
 import { AuthService } from './auth.service';
 
-const create = async (payload: User): Promise<ResultModel> => {
+const create = async (payload: User): Promise<ResultModel<User>> => {
   return await UserRepository.create(payload);
 };
-const update = async (id: string, payload: User): Promise<ResultModel> => {
+const update = async (id: string, payload: User): Promise<ResultModel<User>> => {
   const found = await UserRepository.getById(id);
   if (!found) {
     throw new Error(`ID ${id} not found`);
@@ -16,7 +16,7 @@ const update = async (id: string, payload: User): Promise<ResultModel> => {
   return await UserRepository.update(id, payload);
 };
 
-const getAll = async (pagination: IPagination): Promise<ResultListModel> => {
+const getAll = async (pagination: IPagination): Promise<ResultListModel<User>> => {
   return await UserRepository.getAll(pagination);
 };
 

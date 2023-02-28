@@ -1,8 +1,9 @@
 import { IPagination } from '@src/models/pagination/pagination.model';
 import { ResultListModel, ResultModel } from '@src/models/result.list.model';
 import { User } from '@src/models/users/user.model';
+import { HelperService } from '@src/util/helpers/is-valid-object-id';
 
-const getAll = async ({ skip, limit, filter }: IPagination): Promise<ResultListModel> => {
+const getAll = async ({ skip, limit, filter }: IPagination): Promise<ResultListModel<User>> => {
   let findQuery: any;
 
   if (filter) {
@@ -13,7 +14,7 @@ const getAll = async ({ skip, limit, filter }: IPagination): Promise<ResultListM
     findQuery.limit(limit);
   }
 
-  const result: ResultListModel = {
+  const result: ResultListModel<User> = {
     results: await findQuery,
     count: await count(),
   };
@@ -22,6 +23,10 @@ const getAll = async ({ skip, limit, filter }: IPagination): Promise<ResultListM
 };
 
 const getById = async (id: string): Promise<any> => {
+  if (!HelperService.checkIfObjectIdIsValid(id)) {
+    throw Error('ID inválida.');
+  }
+
   return await User.findOne({ _id: id });
 };
 
@@ -29,20 +34,21 @@ const findOneByEmail = async (prop: string): Promise<any> => {
   return await User.findOne({ email: prop });
 };
 
-const create = async (payload: User): Promise<ResultModel> => {
+const create = async (payload: User): Promise<ResultModel<User>> => {
   const user = new User(payload);
   const result = await user.save();
 
   return { result };
 };
 
-const update = async (id: string, payload: User): Promise<ResultModel> => {
+const update = async (id: string, payload: User): Promise<ResultModel<any>> => {
+  if (!HelperService.checkIfObjectIdIsValid(id)) throw Error('ID inválida.');
   const result = await User.findByIdAndUpdate(id, payload);
   return { result };
 };
 
 const count = async (): Promise<number> => {
-  return User.find().count();
+  return await User.find().count();
 };
 
 export const UserRepository = {

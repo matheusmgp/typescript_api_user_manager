@@ -1,6 +1,38 @@
 import { Response } from 'express';
 import mongoose, { Error } from 'mongoose';
 
+export class HttpResponse {
+  constructor(statusCode: number, result: any, method: string) {
+    this.data = result;
+    this.method = method;
+    this.statusCode = statusCode;
+    this.timestamp = new Date().toISOString();
+  }
+  statusCode: number;
+  data: any;
+  timestamp: string;
+  method: string;
+}
+export class HttpExceptionResponse {
+  constructor(statusCode: number, error: any, method: string) {
+    this.error = error;
+    this.method = method;
+    this.statusCode = statusCode;
+    this.timestamp = new Date().toISOString();
+  }
+  statusCode: number;
+  error: any;
+  timestamp: string;
+  method: string;
+}
+export class HttpListResponse extends HttpResponse {
+  constructor(statusCode: number, result: any, method: string, count: number) {
+    super(statusCode, result, method);
+    this.count = count;
+  }
+  count: number;
+}
+
 const sendCreateUpdateErrorResponse = (res: Response, error: mongoose.Error.ValidationError | Error): void => {
   if (error instanceof mongoose.Error.ValidationError) {
     const clientErrors = handleClientErrors(error);
@@ -19,31 +51,15 @@ const handleClientErrors = (error: mongoose.Error.ValidationError): { code: numb
 };
 
 const httpResponse = (data: any, method: string, res: Response, statusCode: number) => {
-  res.status(statusCode).send({
-    code: statusCode,
-    data,
-    timestamp: new Date().toISOString(),
-    method,
-  });
+  res.status(statusCode).send(new HttpResponse(statusCode, data, method));
 };
 
 const httpExceptionResponse = (error: any, method: string, res: Response, statusCode: number) => {
-  res.status(statusCode).send({
-    code: statusCode,
-    error,
-    timestamp: new Date().toISOString(),
-    method,
-  });
+  res.status(statusCode).send(new HttpExceptionResponse(statusCode, error, method));
 };
 
 const httpResponseList = (data: any, method: string, res: Response, statusCode: number) => {
-  res.status(statusCode).send({
-    code: statusCode,
-    data: data.results,
-    timestamp: new Date().toISOString(),
-    method,
-    count: data.count,
-  });
+  res.status(statusCode).send(new HttpListResponse(statusCode, data.results, method, data.count));
 };
 
 export const BaseController = {

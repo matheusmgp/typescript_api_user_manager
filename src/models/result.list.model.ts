@@ -1,7 +1,7 @@
-export interface ResultListModel {
-  results: Array<any>;
+export interface ResultListModel<T> {
+  data: Array<T>;
   count: number;
 }
-export interface ResultModel {
-  result: any;
+export interface ResultModel<T> {
+  data: T | null;
 }
