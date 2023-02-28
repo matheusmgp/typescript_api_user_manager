@@ -5,7 +5,7 @@ import { validation } from '@src/shared/middleware';
 import { AuthMiddleware } from '@src/shared/middleware/auth.middleware';
 import express, { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { resolveDependencies } from '../../../config/dependency.resolver';
+import { resolveUsersDependencies } from '../../../config/dependency.resolver';
 export class UserRoutes {
   public router: Router;
 
@@ -37,7 +37,7 @@ export class UserRoutes {
 
     let result: any;
     try {
-      result = await resolveDependencies().userController.getAll(pagination);
+      result = await resolveUsersDependencies().userController.getAll(pagination);
       if (result) {
         BaseController.httpResponse(result, 'get', res, StatusCodes.OK);
       } else {
@@ -50,8 +50,8 @@ export class UserRoutes {
   private async getById(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
-      result = await resolveDependencies().userController.getById(req.params.id);
-      console.log('result.', result);
+      result = await resolveUsersDependencies().userController.getById(req.params.id);
+
       if (result) {
         BaseController.httpResponse(result.data, 'get', res, StatusCodes.OK);
       } else {
@@ -64,7 +64,7 @@ export class UserRoutes {
   private async create(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
-      result = await resolveDependencies().userController.create(req.body);
+      result = await resolveUsersDependencies().userController.create(req.body);
       BaseController.httpResponse(result.data, 'post', res, StatusCodes.CREATED);
     } catch (error: any) {
       BaseController.sendCreateUpdateErrorResponse(res, error);
@@ -73,7 +73,7 @@ export class UserRoutes {
   private async update(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
-      result = await resolveDependencies().userController.update(req.params.id, req.body);
+      result = await resolveUsersDependencies().userController.update(req.params.id, req.body);
       BaseController.httpResponse(result.data, 'post', res, StatusCodes.OK);
     } catch (err: any) {
       BaseController.httpExceptionResponse(err.message, 'patch', res, StatusCodes.BAD_REQUEST);
