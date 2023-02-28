@@ -23,6 +23,6 @@ export const validation: TValidation = (schemas) => async (req, res, next) => {
   if (Object.entries(errorsResult).length === 0) {
     next();
   } else {
-    res.status(StatusCodes.BAD_REQUEST).json({ code: 401, errors: errorsResult });
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ code: 422, errors: errorsResult });
   }
 };

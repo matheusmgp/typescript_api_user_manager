@@ -33,12 +33,15 @@ export class HttpListResponse extends HttpResponse {
   count: number;
 }
 
-const sendCreateUpdateErrorResponse = (res: Response, error: mongoose.Error.ValidationError | Error): void => {
+const sendCreateUpdateErrorResponse = (error: mongoose.Error.ValidationError | Error): any => {
   if (error instanceof mongoose.Error.ValidationError) {
     const clientErrors = handleClientErrors(error);
-    res.status(clientErrors.code).send(clientErrors);
+    // res.status(clientErrors.code).send(clientErrors);
+
+    return clientErrors;
   } else {
-    res.status(500).send({ code: 500, error: 'Internal Server Error' });
+    //res.status(500).send({ code: 500, error: 'Internal Server Error' });
+    return { code: 500, error: 'Internal Server Error' };
   }
 };
 

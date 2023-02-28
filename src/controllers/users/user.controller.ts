@@ -2,6 +2,8 @@ import { IPagination } from '@src/models/pagination/pagination.model';
 import { ResultListModel, ResultModel } from '@src/models/result.list.model';
 import { User } from '@src/models/users/user.model';
 import { IUserService } from '@src/services/interfaces/user.interface.service';
+import { UserEmailValidationError } from '@src/util/errors/email-already-exists-error';
+import { BaseController } from '../base.controller';
 
 export class UserController {
   constructor(private readonly userService: IUserService<User>) {}
@@ -22,7 +24,14 @@ export class UserController {
   }
 
   public async create(body: User): Promise<ResultModel<User>> {
-    const data = await this.userService.create(body);
+    let data: any;
+    try {
+      const user = new User(body);
+      data = await this.userService.create(user);
+    } catch (error: any) {
+      const err = BaseController.sendCreateUpdateErrorResponse(error);
+      throw new UserEmailValidationError(err);
+    }
     return { data };
   }
 

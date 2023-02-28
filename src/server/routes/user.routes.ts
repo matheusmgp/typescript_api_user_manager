@@ -19,13 +19,13 @@ export class UserRoutes {
   }
 
   protected registerRoutes(): void {
-    this.router.get('/user', AuthMiddleware, this.paginationValidation, this.getAll);
+    this.router.get('/user', /*AuthMiddleware,*/ this.paginationValidation, this.getAll);
 
-    this.router.get('/user/:id', AuthMiddleware, this.paramsValidation, this.getById);
+    this.router.get('/user/:id', /*AuthMiddleware,*/ this.paramsValidation, this.getById);
 
-    this.router.post('/user', AuthMiddleware, this.createValidation, this.create);
+    this.router.post('/user', /*AuthMiddleware,*/ this.createValidation, this.create);
 
-    this.router.patch('/user/:id', AuthMiddleware, this.update);
+    this.router.patch('/user/:id', /*AuthMiddleware,*/ this.update);
   }
 
   private async getAll(req: Request, res: Response): Promise<void> {
@@ -65,9 +65,10 @@ export class UserRoutes {
     let result: any;
     try {
       result = await resolveUsersDependencies().userController.create(req.body);
+
       BaseController.httpResponse(result.data, 'post', res, StatusCodes.CREATED);
-    } catch (error: any) {
-      BaseController.sendCreateUpdateErrorResponse(res, error);
+    } catch (err: any) {
+      BaseController.httpExceptionResponse(err.message, 'post', res, StatusCodes.CONFLICT);
     }
   }
   private async update(req: Request, res: Response): Promise<void> {

@@ -1,5 +1,5 @@
 import '../util/module-alias';
-import express from 'express';
+import express, { Application } from 'express';
 import { router } from './routes';
 import config from 'config';
 import * as database from '@src/database/database';
@@ -26,5 +26,8 @@ export class SetupServer {
   }
   public async close(): Promise<void> {
     await database.close();
+  }
+  public getApp(): Application {
+    return this.server;
   }
 }
