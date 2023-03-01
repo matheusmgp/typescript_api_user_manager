@@ -23,13 +23,13 @@ export class UserRoutes {
   }
 
   protected registerRoutes(): void {
-    this.router.get('/user', /*AuthMiddleware,*/ this.paginationValidation, this.getAll);
+    this.router.get('/user', AuthMiddleware, this.paginationValidation, this.getAll);
 
-    this.router.get('/user/:id', /*AuthMiddleware,*/ this.paramsValidation, this.getById);
+    this.router.get('/user/:id', AuthMiddleware, this.paramsValidation, this.getById);
 
-    this.router.post('/user', /*AuthMiddleware,*/ this.createValidation, this.create);
+    this.router.post('/user', AuthMiddleware, this.createValidation, this.create);
 
-    this.router.patch('/user/:id', /*AuthMiddleware,*/ this.updateValidation, this.paramsValidation, this.update);
+    this.router.patch('/user/:id', AuthMiddleware, this.updateValidation, this.paramsValidation, this.update);
   }
 
   private async getAll(req: Request, res: Response): Promise<void> {

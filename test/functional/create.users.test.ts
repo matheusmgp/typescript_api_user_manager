@@ -86,7 +86,7 @@ describe('User functional tests', () => {
         email: 'jesttest@test.com',
         password: '10101010',
       };
-      await global.testRequest.post('/user').send(newUser);
+      await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
       const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(409);
