@@ -2,7 +2,7 @@ import { ResultModel } from '@src/models/result.list.model';
 import { User } from '@src/models/users/user.model';
 import { ICreateUserService } from '@src/services/interfaces/users/create-users.interface.service';
 import { UserEmailValidationError } from '@src/util/errors/email-already-exists-error';
-import { BaseController } from '../base.controller';
+import { HttpResponseService } from '../http-response';
 
 export class CreateUserController {
   constructor(private readonly userService: ICreateUserService<User>) {}
@@ -12,7 +12,7 @@ export class CreateUserController {
     try {
       data = await this.userService.execute(body);
     } catch (error: any) {
-      const err = BaseController.sendCreateUpdateErrorResponse(error);
+      const err = HttpResponseService.sendCreateUpdateErrorResponse(error);
       throw new UserEmailValidationError(err);
     }
     return { data };

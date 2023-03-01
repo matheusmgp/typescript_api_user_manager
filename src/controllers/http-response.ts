@@ -65,7 +65,7 @@ const httpResponseList = (data: any, method: string, res: Response, statusCode: 
   res.status(statusCode).send(new HttpListResponse(statusCode, data.results, method, data.count));
 };
 
-export const BaseController = {
+export const HttpResponseService = {
   sendCreateUpdateErrorResponse,
   handleClientErrors,
   httpResponse,
