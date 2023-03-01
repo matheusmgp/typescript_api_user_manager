@@ -1,6 +1,6 @@
 import { User } from '@src/models/users/user.model';
 import { IUserRepository } from '@src/repositories/interfaces/user.interface.repository';
-import { IGetByIdUserService } from '@src/services/interfaces/getbyid-users.interface.service';
+import { IGetByIdUserService } from '@src/services/interfaces/users/getbyid-users.interface.service';
 import { IdNotFoundError } from '@src/util/errors/id-not-found-error';
 import { IdNotValidError } from '@src/util/errors/id-not-valid-error';
 import { HelperService } from '@src/util/helpers/is-valid-object-id';

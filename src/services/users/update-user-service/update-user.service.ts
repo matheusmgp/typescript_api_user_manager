@@ -1,7 +1,7 @@
 import { User } from '@src/models/users/user.model';
 import { IUserRepository } from '@src/repositories/interfaces/user.interface.repository';
 import { AuthService } from '@src/services/auth.service';
-import { IUpdateUserService } from '@src/services/interfaces/update-users.interface.service';
+import { IUpdateUserService } from '@src/services/interfaces/users/update-users.interface.service';
 import { UserEmailValidationError } from '@src/util/errors/email-already-exists-error';
 import { IdNotFoundError } from '@src/util/errors/id-not-found-error';
 import { IdNotValidError } from '@src/util/errors/id-not-valid-error';
