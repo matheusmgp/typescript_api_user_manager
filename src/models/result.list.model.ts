@@ -5,3 +5,8 @@ export interface ResultListModel<T> {
 export interface ResultModel<T> {
   data: T | null;
 }
+
+export class RequestModel<T> {
+  constructor() {}
+  body: T;
+}

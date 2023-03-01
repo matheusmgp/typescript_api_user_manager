@@ -24,10 +24,11 @@ export class UserController {
   }
 
   public async create(body: User): Promise<ResultModel<User>> {
+    console.log('body', body);
     let data: any;
     try {
-      const user = new User(body);
-      data = await this.userService.create(user);
+      data = await this.userService.create(body);
+      console.log('data', data);
     } catch (error: any) {
       const err = BaseController.sendCreateUpdateErrorResponse(error);
       throw new UserEmailValidationError(err);

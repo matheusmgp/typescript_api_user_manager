@@ -17,7 +17,6 @@ describe('User update functional tests', () => {
       const newuser = new User(defaultUser);
       const userCreated = await newuser.save();
       user = userCreated;
-      //console.log(user);
       token = AuthService.generateToken(userCreated.toJSON());
     });
     it('should successfully update a new user with encrypted password', async () => {
@@ -31,7 +30,7 @@ describe('User update functional tests', () => {
         .patch(`/user/${user._id}`)
         .set({ 'x-access-token': token })
         .send(payload);
-      console.log(response.body);
+
       expect(response.status).toBe(200);
       await expect(AuthService.comparePassword(payload.password, response.body.data.password)).resolves.toBeTruthy();
       expect(response.body.data).toEqual(
@@ -114,8 +113,6 @@ describe('User update functional tests', () => {
         .patch(`/user/${created1._id}`)
         .set({ 'x-access-token': token })
         .send(defaultUser);
-      console.log(response.body);
-      console.log(response.status);
       expect(response.status).toBe(409);
       expect(response.body).toEqual(
         expect.objectContaining({
