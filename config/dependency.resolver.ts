@@ -1,6 +1,3 @@
-import { UserController } from '../src/controllers/users/user.controller';
-import { UsersRService } from '../src/services/users.service';
-import { UsersRepository } from '../src/repositories/users/users.repository';
 import { GetAllUsersController } from '@src/controllers/users/getall-users.controller';
 import { GetAllUsersService } from '@src/services/users/getall-user-service/getall-user.service';
 import { GetByIdUserController } from '@src/controllers/users/getbyid-users.controller';
@@ -9,13 +6,20 @@ import { CreateUserController } from '@src/controllers/users/create-user.control
 import { CreateUserService } from '@src/services/users/create-user-service/create-user.service';
 import { UpdateUserController } from '@src/controllers/users/update-user.controller';
 import { UpdateUserService } from '@src/services/users/update-user-service/update-user.service';
+import { GetAllUsersRepository } from '@src/repositories/users/getall-user-repository/getall-user.repository';
+import { GetByIdUsersRepository } from '@src/repositories/users/getbyid-user-repository/getbyid-user.repository';
+import { CreateUserRepository } from '@src/repositories/users/create-user-repository/create-user.repository';
+import { UpdateUserRepository } from '@src/repositories/users/update-user-repository/update-user.repository';
+import { SignInController } from '@src/controllers/users/auth/signin.controller';
 
 export const resolveUsersDependencies = () => {
-  const userController = new UserController(new UsersRService(new UsersRepository()));
-  const getallUsersController = new GetAllUsersController(new GetAllUsersService(new UsersRepository()));
-  const getByIdUserController = new GetByIdUserController(new GetByIdUserService(new UsersRepository()));
-  const createUserController = new CreateUserController(new CreateUserService(new UsersRepository()));
-  const updateUserController = new UpdateUserController(new UpdateUserService(new UsersRepository()));
+  const getallUsersController = new GetAllUsersController(new GetAllUsersService(new GetAllUsersRepository()));
+  const getByIdUserController = new GetByIdUserController(new GetByIdUserService(new GetByIdUsersRepository()));
+  const createUserController = new CreateUserController(new CreateUserService(new CreateUserRepository()));
+  const updateUserController = new UpdateUserController(
+    new UpdateUserService(new UpdateUserRepository(), new GetByIdUsersRepository())
+  );
+  const siginController: SignInController = new SignInController(new GetByIdUsersRepository());
 
-  return { userController, getallUsersController, getByIdUserController, createUserController, updateUserController };
+  return { getallUsersController, getByIdUserController, createUserController, updateUserController, siginController };
 };

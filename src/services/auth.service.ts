@@ -15,7 +15,7 @@ const comparePassword = async (password: string, hashedPassword: string): Promis
   return await bcrypt.compare(password, hashedPassword);
 };
 
-const generateToken = (payload: object): string => {
+const generateToken = (payload: any): string => {
   return jwt.sign(payload, config.get('App.auth.key'), {
     expiresIn: config.get('App.auth.tokenExpiresIn'),
   });

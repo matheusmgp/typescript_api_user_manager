@@ -23,83 +23,16 @@ export class UserRoutes {
   }
 
   protected registerRoutes(): void {
-    this.router.get('/user/getAll', /*AuthMiddleware,*/ this.paginationValidation, this.getAll2);
-
     this.router.get('/user', /*AuthMiddleware,*/ this.paginationValidation, this.getAll);
 
     this.router.get('/user/:id', /*AuthMiddleware,*/ this.paramsValidation, this.getById);
 
-    this.router.get('/user/getbyid/:id', /*AuthMiddleware,*/ this.paramsValidation, this.getById2);
-
     this.router.post('/user', /*AuthMiddleware,*/ this.createValidation, this.create);
 
-    this.router.post('/user/create', /*AuthMiddleware,*/ this.createValidation, this.create2);
-
     this.router.patch('/user/:id', /*AuthMiddleware,*/ this.updateValidation, this.paramsValidation, this.update);
-
-    this.router.patch(
-      '/user/update/:id',
-      /*AuthMiddleware,*/ this.updateValidation,
-      this.paramsValidation,
-      this.update2
-    );
   }
 
   private async getAll(req: Request, res: Response): Promise<void> {
-    const pagination: any = {
-      skip: req.query.skip,
-      limit: req.query.limit,
-      filter: req.query.filter,
-    };
-
-    let result: any;
-    try {
-      result = await resolveUsersDependencies().userController.getAll(pagination);
-      if (result) {
-        BaseController.httpResponse(result.data, 'get', res, StatusCodes.OK);
-      } else {
-        BaseController.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
-      }
-    } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'get', res, StatusCodes.BAD_REQUEST);
-    }
-  }
-  private async getById(req: Request, res: Response): Promise<void> {
-    let result: any;
-    try {
-      result = await resolveUsersDependencies().userController.getById(req.params.id);
-
-      if (result) {
-        BaseController.httpResponse(result.data, 'get', res, StatusCodes.OK);
-      } else {
-        BaseController.httpResponse(result.data, 'get', res, StatusCodes.NOT_FOUND);
-      }
-    } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'get', res, StatusCodes.BAD_REQUEST);
-    }
-  }
-  private async create(req: Request, res: Response): Promise<void> {
-    let result: any;
-    try {
-      result = await resolveUsersDependencies().userController.create(req.body);
-
-      BaseController.httpResponse(result.data, 'post', res, StatusCodes.CREATED);
-    } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'post', res, err.code);
-    }
-  }
-  private async update(req: Request, res: Response): Promise<void> {
-    let result: any;
-    try {
-      result = await resolveUsersDependencies().userController.update(req.params.id, req.body);
-      BaseController.httpResponse(result.data, 'patch', res, StatusCodes.OK);
-    } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'patch', res, err.code);
-    }
-  }
-
-  //em teste
-  private async getAll2(req: Request, res: Response): Promise<void> {
     const pagination: any = {
       skip: req.query.skip,
       limit: req.query.limit,
@@ -115,10 +48,10 @@ export class UserRoutes {
         BaseController.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
       }
     } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'get', res, StatusCodes.BAD_REQUEST);
+      BaseController.httpExceptionResponse(err.message, 'get', res, err.code);
     }
   }
-  private async getById2(req: Request, res: Response): Promise<void> {
+  private async getById(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
       result = await resolveUsersDependencies().getByIdUserController.handleRequest(req.params.id);
@@ -129,10 +62,10 @@ export class UserRoutes {
         BaseController.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
       }
     } catch (err: any) {
-      BaseController.httpExceptionResponse(err.message, 'get', res, StatusCodes.BAD_REQUEST);
+      BaseController.httpExceptionResponse(err.message, 'get', res, err.code);
     }
   }
-  private async create2(req: Request, res: Response): Promise<void> {
+  private async create(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
       result = await resolveUsersDependencies().createUserController.handleRequest(req.body);
@@ -142,7 +75,7 @@ export class UserRoutes {
       BaseController.httpExceptionResponse(err.message, 'post', res, err.code);
     }
   }
-  private async update2(req: Request, res: Response): Promise<void> {
+  private async update(req: Request, res: Response): Promise<void> {
     let result: any;
     try {
       result = await resolveUsersDependencies().updateUserController.handleRequest(req.params.id, req.body);

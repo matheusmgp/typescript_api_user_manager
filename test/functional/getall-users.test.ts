@@ -17,7 +17,7 @@ describe('GetAllUsersController functional tests', () => {
   });
   describe('When retrieving all users from database', () => {
     it('should successfully return a list os users', async () => {
-      const response = await global.testRequest.get('/user/getAll?skip=0&limit=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/user?skip=0&limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(200);
 
@@ -40,23 +40,19 @@ describe('GetAllUsersController functional tests', () => {
       );
     });
     it('should return a empty list', async () => {
-      const response = await global.testRequest
-        .get('/user/getAll?skip=100000&limit=10')
-        .set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/user?skip=100000&limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(200);
 
-      expect(response.body).toEqual(
-        expect.objectContaining({
-          data: [],
-          method: 'get',
-          statusCode: 200,
-          timestamp: expect.any(String),
-        })
-      );
+      expect(response.body).toEqual({
+        data: [],
+        method: 'get',
+        statusCode: 200,
+        timestamp: expect.any(String),
+      });
     });
     it('should return 422 when the skip filter is not passed in query', async () => {
-      const response = await global.testRequest.get('/user/getAll?limit=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/user?limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(422);
 
@@ -68,7 +64,7 @@ describe('GetAllUsersController functional tests', () => {
       });
     });
     it('should return 422 when the limit filter is not passed in query', async () => {
-      const response = await global.testRequest.get('/user/getAll?skip=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/user?skip=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(422);
 
@@ -80,7 +76,7 @@ describe('GetAllUsersController functional tests', () => {
       });
     });
     it('should return 422 when both limit  and skip filter is not passed in query', async () => {
-      const response = await global.testRequest.get('/user/getAll').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/user').set({ 'x-access-token': token });
 
       expect(response.status).toBe(422);
 
