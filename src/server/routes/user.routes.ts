@@ -17,6 +17,7 @@ export class UserRoutes {
   private createValidation = validation({ body: userCreateSchema });
   private paramsValidation = validation({ params: userParamsSchema });
   private updateValidation = validation({ body: userUpdateSchema });
+
   constructor() {
     this.router = express.Router();
     this.registerRoutes();
@@ -24,11 +25,8 @@ export class UserRoutes {
 
   protected registerRoutes(): void {
     this.router.get('/user', AuthMiddleware, this.paginationValidation, this.getAll);
-
     this.router.get('/user/:id', AuthMiddleware, this.paramsValidation, this.getById);
-
     this.router.post('/user', AuthMiddleware, this.createValidation, this.create);
-
     this.router.patch('/user/:id', AuthMiddleware, this.updateValidation, this.paramsValidation, this.update);
   }
 
@@ -55,7 +53,7 @@ export class UserRoutes {
     let result: any;
     try {
       result = await resolveUsersDependencies().getByIdUserController.handleRequest(req.params.id);
-      console.log('result,result', result);
+
       if (result) {
         HttpResponseService.httpResponse(result, 'get', res, StatusCodes.OK);
       } else {

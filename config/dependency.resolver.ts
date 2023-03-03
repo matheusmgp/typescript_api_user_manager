@@ -19,7 +19,12 @@ export const resolveUsersDependencies = () => {
   const updateUserController = new UpdateUserController(
     new UpdateUserService(new UpdateUserRepository(), new GetByIdUsersRepository())
   );
-  const siginController: SignInController = new SignInController(new GetByIdUsersRepository());
 
-  return { getallUsersController, getByIdUserController, createUserController, updateUserController, siginController };
+  return { getallUsersController, getByIdUserController, createUserController, updateUserController };
+};
+
+export const resolveSignInDependencies = () => {
+  const siginController = new SignInController(new GetByIdUsersRepository());
+
+  return { siginController };
 };

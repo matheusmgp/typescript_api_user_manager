@@ -13,7 +13,7 @@ describe('SignIn functional tests', () => {
       const response = await global.testRequest
         .post('/signin')
         .send({ email: newUser.email, password: newUser.password });
-      console.log(response.body);
+
       expect(response.body).toEqual(expect.objectContaining({ ...response.body, method: 'post', statusCode: 200 }));
     });
     it('should return UNAUTHORIZED if the user with the given email is not found', async () => {

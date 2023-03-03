@@ -9,7 +9,7 @@ export const userCreateSchema: Schema<User> = object({
 });
 
 export const userUpdateSchema: Schema<User> = object({
-  name: string().required().min(5).max(20),
+  name: string().required().min(5).max(50),
   email: string().email().required(),
   password: string().required().min(8).max(8),
 });

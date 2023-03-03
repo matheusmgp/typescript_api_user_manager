@@ -12,7 +12,7 @@ export interface SignInResponse {
 }
 export class SignInController {
   constructor(private readonly repository: GetByIdUsersRepository) {}
-  public async singIn(id: string, body: any): Promise<SignInResponse> {
+  public async signIn(id: string, body: any): Promise<SignInResponse> {
     const { email, password } = body;
     let user: any;
     let token = '';

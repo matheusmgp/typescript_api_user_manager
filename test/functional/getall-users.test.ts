@@ -16,7 +16,7 @@ describe('GetAllUsersController functional tests', () => {
     token = AuthService.generateToken(user.toJSON());
   });
   describe('When retrieving all users from database', () => {
-    it('should successfully return a list os users', async () => {
+    test('should successfully return a list os users', async () => {
       const response = await global.testRequest.get('/user?skip=0&limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(200);
