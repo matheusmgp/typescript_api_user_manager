@@ -11,6 +11,9 @@ import { GetByIdUsersRepository } from '@src/repositories/users/getbyid-user-rep
 import { CreateUserRepository } from '@src/repositories/users/create-user-repository/create-user.repository';
 import { UpdateUserRepository } from '@src/repositories/users/update-user-repository/update-user.repository';
 import { SignInController } from '@src/controllers/users/auth/signin.controller';
+import { GetUserInfoController } from '@src/controllers/users/get-user-info.controller';
+import { GetUserInfoService } from '@src/services/users/get-user-info-service/getuserinfo.service';
+import { GetUserInfoRepository } from '@src/repositories/users/getuserinfo-repository/getuserinfo-user.repository';
 
 export const resolveUsersDependencies = () => {
   const getallUsersController = new GetAllUsersController(new GetAllUsersService(new GetAllUsersRepository()));
@@ -19,8 +22,14 @@ export const resolveUsersDependencies = () => {
   const updateUserController = new UpdateUserController(
     new UpdateUserService(new UpdateUserRepository(), new GetByIdUsersRepository())
   );
-
-  return { getallUsersController, getByIdUserController, createUserController, updateUserController };
+  const getUserInfoController = new GetUserInfoController(new GetUserInfoService(new GetUserInfoRepository()));
+  return {
+    getallUsersController,
+    getByIdUserController,
+    createUserController,
+    updateUserController,
+    getUserInfoController,
+  };
 };
 
 export const resolveSignInDependencies = () => {

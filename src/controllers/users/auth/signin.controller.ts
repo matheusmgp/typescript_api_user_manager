@@ -3,7 +3,7 @@ import { GetByIdUsersRepository } from '@src/repositories/users/getbyid-user-rep
 import { AuthService } from '@src/services/auth.service';
 import { PasswordDoesNotMatchError } from '@src/util/errors/password-does-not-match.error';
 import { UserNotFoundError } from '@src/util/errors/user-not-found.errorr';
-
+//import { setRedis } from '../../../../redis.Config';
 export interface SignInResponse {
   data: {
     user: User;
@@ -34,7 +34,7 @@ export class SignInController {
         throw new PasswordDoesNotMatchError('');
       }
     }
-
+    //await setRedis(`user-${user.data.id}`, JSON.stringify(user.data));
     return {
       data: {
         user: user.data,

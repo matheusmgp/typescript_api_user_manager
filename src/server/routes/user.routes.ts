@@ -26,6 +26,7 @@ export class UserRoutes {
   protected registerRoutes(): void {
     this.router.get('/user', AuthMiddleware, this.paginationValidation, this.getAll);
     this.router.get('/user/:id', AuthMiddleware, this.paramsValidation, this.getById);
+    this.router.get('/user/info/logged', AuthMiddleware, this.getUserInfo);
     this.router.post('/user', AuthMiddleware, this.createValidation, this.create);
     this.router.patch('/user/:id', AuthMiddleware, this.updateValidation, this.paramsValidation, this.update);
   }
@@ -53,6 +54,25 @@ export class UserRoutes {
     let result: any;
     try {
       result = await resolveUsersDependencies().getByIdUserController.handleRequest(req.params.id);
+
+      if (result) {
+        HttpResponseService.httpResponse(result, 'get', res, StatusCodes.OK);
+      } else {
+        HttpResponseService.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
+      }
+    } catch (err: any) {
+      HttpResponseService.httpExceptionResponse(err.message, 'get', res, err.code);
+    }
+  }
+  private async getUserInfo(req: Request, res: Response): Promise<void> {
+    let result: any;
+
+    try {
+      if (req.decoded?.id) {
+        result = await resolveUsersDependencies().getUserInfoController.handleRequest(req.decoded.id);
+      } else {
+        HttpResponseService.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
+      }
 
       if (result) {
         HttpResponseService.httpResponse(result, 'get', res, StatusCodes.OK);

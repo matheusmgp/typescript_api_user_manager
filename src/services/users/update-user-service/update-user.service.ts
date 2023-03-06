@@ -8,12 +8,18 @@ import { IdNotFoundError } from '@src/util/errors/id-not-found-error';
 import { IdNotValidError } from '@src/util/errors/id-not-valid-error';
 import { HelperService } from '@src/util/helpers/is-valid-object-id';
 
+export interface UpdateUserRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export class UpdateUserService implements IUpdateUserService<User> {
   constructor(
     private readonly repository: IUpdateUserRepository<User>,
     private readonly getbyidRepository: IGetByIdUserRepository<User>
   ) {}
-  async execute(id: string, payload: User): Promise<any> {
+  async execute(id: string, payload: UpdateUserRequest): Promise<any> {
     if (!HelperService.checkIfObjectIdIsValid(id)) {
       throw new IdNotValidError(id);
     }
