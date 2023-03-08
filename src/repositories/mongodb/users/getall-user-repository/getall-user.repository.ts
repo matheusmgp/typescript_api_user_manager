@@ -3,7 +3,7 @@ import { ResultListModel } from '@src/models/result.list.model';
 import { User } from '@src/models/users/user.model';
 import { IGetAllUserRepository } from '@src/repositories/interfaces/users/getall-user.interface.repository';
 
-export class GetAllUsersRepository implements IGetAllUserRepository<User> {
+export class GetAllUsersMongoDbRepository implements IGetAllUserRepository<User> {
   async getAll({ skip, limit, filter }: IPagination): Promise<ResultListModel<User>> {
     let findQuery: any;
 

@@ -7,7 +7,7 @@ export interface UpdateUserData {
   email: string;
   password: string;
 }
-export class UpdateUserRepository implements IUpdateUserRepository<User> {
+export class UpdateUserMongoDbRepository implements IUpdateUserRepository<User> {
   async update(id: string, payload: UpdateUserData): Promise<ResultModel<User>> {
     const updated = await User.findByIdAndUpdate(id, payload);
     const result: ResultModel<User> = {

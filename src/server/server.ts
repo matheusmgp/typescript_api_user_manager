@@ -2,7 +2,7 @@ import '../util/module-alias';
 import express, { Application } from 'express';
 import { router } from './routes';
 import config from 'config';
-import * as database from '@src/database/database';
+import * as database from '@src/database/mongo/database';
 
 export class SetupServer {
   constructor(private port = config.get('App.port'), private app = express()) {}
@@ -11,7 +11,7 @@ export class SetupServer {
     this.app.use(express.json());
     this.start();
     this.setRoutes();
-    await this.databaseSetup();
+    // await this.databaseSetup();
   }
   public start(): void {
     this.app.listen(this.port, () => {
