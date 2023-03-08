@@ -11,7 +11,7 @@ export class SetupServer {
     this.app.use(express.json());
     this.start();
     this.setRoutes();
-    // await this.databaseSetup();
+    await this.databaseSetup();
   }
   public start(): void {
     this.app.listen(this.port, () => {
