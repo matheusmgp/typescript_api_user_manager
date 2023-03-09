@@ -1,7 +1,8 @@
 import { User } from '@src/models/users/user.model';
 import { AuthService } from '@src/services/auth.service';
+import { clearScreenDown } from 'readline';
 
-describe('User functional tests', () => {
+describe('User e2e tests', () => {
   const defaultUser = {
     name: 'Default User',
     email: 'default@default.com',
@@ -14,6 +15,7 @@ describe('User functional tests', () => {
     const user = await new User(defaultUser).save();
 
     token = AuthService.generateToken(user.toJSON());
+    clearScreenDown;
   });
   describe('When creating a new user', () => {
     beforeAll(async () => await User.deleteMany({}));

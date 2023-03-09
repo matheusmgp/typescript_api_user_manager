@@ -6,7 +6,7 @@
     },
     "auth": {
       "key": "some-key",
-      "tokenExpiresIn": 1000000000
+      "tokenExpiresIn": 100000
     },
     "resources": {}
   }

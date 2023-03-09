@@ -14,7 +14,6 @@ export interface SignInResponse {
 export class SignInController {
   constructor(private readonly repository: GetByIdUsersMongoDbRepository) {}
   public async signIn(id: string, body: any): Promise<SignInResponse> {
-    console.log('body', body);
     const { email, password } = body;
     let user: any;
     let token = '';
