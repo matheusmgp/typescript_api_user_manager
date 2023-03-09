@@ -49,7 +49,7 @@ cd typescript_api_user_manager
 # install all libs inside package.json
 npm i
 
-# execute the project
+# execute the project(dont forget to install mongo in your local PC or use docker container)
 npm run start:local
 ```
 
