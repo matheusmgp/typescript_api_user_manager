@@ -1,6 +1,6 @@
-# User Handling and Authentication
+# User Microservice API
 
-# About this project
+## About this project
 
 It's a nodejs/typescript microservice API ,that basically handle users(create,update,getall,getbyid,signin) for **academic purspose**.
 
@@ -16,7 +16,7 @@ The connection is simple,if you wish to use a mongodb docker container,just crea
 
 There is a folder /test in the root of the project where I set the e2e tests using **JEST**
 
-# Technologies Used
+## Technologies Used
 
 - nodeJS
 - typescript
@@ -35,25 +35,25 @@ There is a folder /test in the root of the project where I set the e2e tests usi
   - I created separated files for which controller for example(CreateUserController,UpdateUserController..) and separated files for the interfaces(services(ICreatedUserService..),repositories(ICreateUserRepository)) and the classes that implement it as well,
     it's a good pratcice ,making it easier to understand the code and to create new features in the future if needed.
 
-# How to start the project
+## How to start the project
 
 Prerequisites: node 18x
 
 ```bash
-# clone repository
+## clone repository
 git clone https://github.com/matheusmgp/typescript_api_user_manager
 
 # open the /typescript_api_user_manager folder
 cd typescript_api_user_manager
 
-# install all libs inside package.json
+## install all libs inside package.json
 npm i
 
-# execute the project(dont forget to install mongo in your local PC or use docker container)
+## execute the project(dont forget to install mongo in your local PC or use docker container)
 npm run start:local
 ```
 
-# Author
+##Author
 
 Matheus Gustavo Pereira
 
