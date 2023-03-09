@@ -18,14 +18,14 @@ describe('SignIn functional tests', () => {
     });
     it('should return UNAUTHORIZED if the user with the given email is not found', async () => {
       const response = await global.testRequest
-        .post('/signin')
+        .post('/v1/signin')
         .send({ email: 'test@testss.com', password: '10101010' });
 
       expect(response.status).toBe(401);
     });
     it('should return UNAUTHORIZED if the user is found but the password does not match', async () => {
       const response = await global.testRequest
-        .post('/signin')
+        .post('/v1/signin')
         .send({ email: 'test@test.com', password: 'wrong-pass' });
 
       expect(response.status).toBe(401);

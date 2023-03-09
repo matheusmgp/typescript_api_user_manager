@@ -27,7 +27,7 @@ describe('User update functional tests', () => {
       };
 
       const response = await global.testRequest
-        .patch(`/user/${user._id}`)
+        .patch(`/v1/user/${user._id}`)
         .set({ 'x-access-token': token })
         .send(payload);
 
@@ -46,7 +46,7 @@ describe('User update functional tests', () => {
         password: '10101010',
       };
       const response = await global.testRequest
-        .patch(`/user/${user._id}`)
+        .patch(`/v1/user/${user._id}`)
         .set({ 'x-access-token': token })
         .send(newUser);
 
@@ -64,7 +64,7 @@ describe('User update functional tests', () => {
         password: '10101010',
       };
       const response = await global.testRequest
-        .patch(`/user/${user._id}`)
+        .patch(`/v1/user/${user._id}`)
         .set({ 'x-access-token': token })
         .send(newUser);
 
@@ -82,7 +82,7 @@ describe('User update functional tests', () => {
         email: 'john@mail.com',
       };
       const response = await global.testRequest
-        .patch(`/user/${user._id}`)
+        .patch(`/v1/user/${user._id}`)
         .set({ 'x-access-token': token })
         .send(newUser);
 
@@ -110,7 +110,7 @@ describe('User update functional tests', () => {
       await new User(defaultUser).save();
 
       const response = await global.testRequest
-        .patch(`/user/${created1._id}`)
+        .patch(`/v1/user/${created1._id}`)
         .set({ 'x-access-token': token })
         .send(defaultUser);
       expect(response.status).toBe(409);
@@ -130,7 +130,7 @@ describe('User update functional tests', () => {
       };
 
       const response = await global.testRequest
-        .patch('/user/not-a-valid-id')
+        .patch('/v1/user/not-a-valid-id')
         .set({ 'x-access-token': token })
         .send(newUser);
 
@@ -151,7 +151,7 @@ describe('User update functional tests', () => {
       };
 
       const response = await global.testRequest
-        .patch('/user/63fe513bf64c141a1464c6a8')
+        .patch('/v1/user/63fe513bf64c141a1464c6a8')
         .set({ 'x-access-token': token })
         .send(newUser);
 

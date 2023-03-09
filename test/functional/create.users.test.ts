@@ -26,7 +26,7 @@ describe('User e2e tests', () => {
         password: '10101010',
       };
 
-      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
+      const response = await global.testRequest.post('/v1/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(201);
       await expect(AuthService.comparePassword(newUser.password, response.body.data.password)).resolves.toBeTruthy();
@@ -42,7 +42,7 @@ describe('User e2e tests', () => {
         email: 'john@mail.com',
         password: '10101010',
       };
-      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
+      const response = await global.testRequest.post('/v1/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -57,7 +57,7 @@ describe('User e2e tests', () => {
         name: 'Teste legal',
         password: '10101010',
       };
-      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
+      const response = await global.testRequest.post('/v1/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -72,7 +72,7 @@ describe('User e2e tests', () => {
         name: 'Teste legal',
         email: 'john@mail.com',
       };
-      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
+      const response = await global.testRequest.post('/v1/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -88,8 +88,8 @@ describe('User e2e tests', () => {
         email: 'jesttest@test.com',
         password: '10101010',
       };
-      await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
-      const response = await global.testRequest.post('/user').set({ 'x-access-token': token }).send(newUser);
+      await global.testRequest.post('/v1/user').set({ 'x-access-token': token }).send(newUser);
+      const response = await global.testRequest.post('/v1/user').set({ 'x-access-token': token }).send(newUser);
 
       expect(response.status).toBe(409);
       expect(response.body).toEqual(

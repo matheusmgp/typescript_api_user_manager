@@ -1,6 +1,7 @@
 {
   "App": {
     "port": 3333,
+    "api_version": "/v1",
     "database": {
       "mongoUrl": "mongodb://127.0.0.1:27017/usuarios"
     },

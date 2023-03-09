@@ -6,7 +6,6 @@ import { IGetAllUsersService } from '@src/services/interfaces/users/getall-users
 export class GetAllUsersController {
   constructor(private readonly userService: IGetAllUsersService<User>) {}
   public async handleRequest({ skip, limit, filter }: IPagination): Promise<ResultListModel<User>> {
-    console.log('oi');
     const pagination: IPagination = {
       skip: Number(skip),
       limit: Number(limit),

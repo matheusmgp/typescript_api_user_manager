@@ -18,7 +18,7 @@ describe('GetAllUsersController functional tests', () => {
   });
   describe('When retrieving all users from database', () => {
     test('should successfully return a list of users', async () => {
-      const response = await global.testRequest.get('/user?skip=0&limit=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/v1/user?skip=0&limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(200);
 
@@ -41,7 +41,7 @@ describe('GetAllUsersController functional tests', () => {
       );
     });
     test('should return a empty list', async () => {
-      const response = await global.testRequest.get('/user?skip=100000&limit=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/v1/user?skip=100000&limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(200);
 
@@ -53,7 +53,7 @@ describe('GetAllUsersController functional tests', () => {
       });
     });
     test('should return 422 when the skip filter is not passed in query', async () => {
-      const response = await global.testRequest.get('/user?limit=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/v1/user?limit=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(422);
 
@@ -65,7 +65,7 @@ describe('GetAllUsersController functional tests', () => {
       });
     });
     test('should return 422 when the limit filter is not passed in query', async () => {
-      const response = await global.testRequest.get('/user?skip=10').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/v1/user?skip=10').set({ 'x-access-token': token });
 
       expect(response.status).toBe(422);
 
@@ -77,7 +77,7 @@ describe('GetAllUsersController functional tests', () => {
       });
     });
     test('should return 422 when both limit  and skip filter is not passed in query', async () => {
-      const response = await global.testRequest.get('/user').set({ 'x-access-token': token });
+      const response = await global.testRequest.get('/v1/user').set({ 'x-access-token': token });
 
       expect(response.status).toBe(422);
 

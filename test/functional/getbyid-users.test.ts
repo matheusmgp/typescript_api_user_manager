@@ -19,7 +19,7 @@ describe('GetByIdUserController functional tests', () => {
   });
   describe('When retrieving a unique user from database', () => {
     it('should successfully return one user from database', async () => {
-      const response = await global.testRequest.get(`/user/${user._id}`).set({ 'x-access-token': token });
+      const response = await global.testRequest.get(`/v1/user/${user._id}`).set({ 'x-access-token': token });
       expect(response.status).toBe(200);
 
       expect(response.body).toEqual({
@@ -36,7 +36,9 @@ describe('GetByIdUserController functional tests', () => {
       });
     });
     it('should return a 404 error when ID does not exists', async () => {
-      const response = await global.testRequest.get(`/user/63ff66aad8527fc3314a5c75`).set({ 'x-access-token': token });
+      const response = await global.testRequest
+        .get(`/v1/user/63ff66aad8527fc3314a5c75`)
+        .set({ 'x-access-token': token });
       expect(response.status).toBe(404);
 
       expect(response.body).toEqual({
@@ -47,7 +49,7 @@ describe('GetByIdUserController functional tests', () => {
       });
     });
     it('should return a 409 error when ID is not a valid ID', async () => {
-      const response = await global.testRequest.get(`/user/not-valid-id`).set({ 'x-access-token': token });
+      const response = await global.testRequest.get(`/v1/user/not-valid-id`).set({ 'x-access-token': token });
       expect(response.status).toBe(409);
 
       expect(response.body).toEqual({

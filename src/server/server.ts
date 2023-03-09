@@ -19,7 +19,7 @@ export class SetupServer {
     });
   }
   public setRoutes(): void {
-    this.app.use('/v1', router);
+    this.app.use(config.get('App.api_version'), router);
   }
   private async databaseSetup(): Promise<void> {
     await database.connect();
