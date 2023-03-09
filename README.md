@@ -12,8 +12,6 @@ to use a mongodb docker container,just create a docker-compose.yml and change th
 
 # Tecnologies Used
 
-## Back end
-
 - nodeJS
 - typescript
 - mongoDB
@@ -25,9 +23,7 @@ to use a mongodb docker container,just create a docker-compose.yml and change th
 - SOLID
 - dependency inversion
 
-# Como executar o projeto
-
-## Back end
+# How to start the project
 
 Prerequisites: node 18x
 
@@ -37,6 +33,9 @@ git clone https://github.com/matheusmgp/typescript_api_user_manager
 
 # open the /typescript_api_user_manager folder
 cd typescript_api_user_manager
+
+# install all libs inside package.json
+npm i
 
 # execute the project
 npm run start:local
