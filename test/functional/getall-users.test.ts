@@ -1,6 +1,6 @@
 import { User } from '@src/models/users/user.model';
 import { AuthService } from '@src/services/auth.service';
-import { jest, expect, test, it, describe } from '@jest/globals';
+import { expect, test, describe } from '@jest/globals';
 
 describe('GetAllUsersController functional tests', () => {
   const defaultUser = {

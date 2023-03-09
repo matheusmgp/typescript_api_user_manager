@@ -25,15 +25,17 @@ export class UpdateUserService implements IUpdateUserService<User> {
     }
 
     const found = await this.getbyidRepository.getById(id);
-    if (!found.data) {
+    if (Object.keys(found.data).length === 0) {
       throw new IdNotFoundError(id);
     }
 
     const exists = await this.getbyidRepository.findOneByEmail(payload.email);
 
-    if (exists.data) {
-      if (id != exists.data._id) {
-        throw new UserEmailValidationError('');
+    if (exists.data instanceof User) {
+      if (exists.data) {
+        if (id != exists.data._id) {
+          throw new UserEmailValidationError('');
+        }
       }
     }
 

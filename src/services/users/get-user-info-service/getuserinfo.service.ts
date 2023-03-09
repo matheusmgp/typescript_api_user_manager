@@ -14,8 +14,7 @@ export class GetUserInfoService implements IGetUserInfoService<User> {
     }
     const result = await this.repository.getById(id);
 
-    console.log(result.data);
-    if (!result.data) {
+    if (Object.keys(result.data).length === 0) {
       throw new IdNotFoundError(id);
     }
     return result.data;

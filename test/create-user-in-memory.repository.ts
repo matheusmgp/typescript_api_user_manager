@@ -11,8 +11,6 @@ export interface CreateUserData {
 export class CreateUserInMemoryRepository implements ICreateUserRepository<User> {
   private users: User[] = [];
   async create(payload: CreateUserData): Promise<ResultModel<User>> {
-    console.log('CreateUserInMemoryRepository');
-
     const user = {
       name: payload.name,
       email: payload.email,

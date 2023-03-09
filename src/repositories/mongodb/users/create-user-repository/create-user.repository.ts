@@ -8,7 +8,7 @@ export interface CreateUserData {
   password: string;
 }
 export class CreateUserMongoDbRepository implements ICreateUserRepository<User> {
-  async create(payload: CreateUserData): Promise<ResultModel<User>> {
+  async create(payload: CreateUserData): Promise<ResultModel<User | {}>> {
     const user = new User(payload);
     const saved = await user.save();
 

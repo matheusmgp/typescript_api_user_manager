@@ -3,7 +3,7 @@ export interface ResultListModel<T> {
   count: number;
 }
 export interface ResultModel<T> {
-  data: T | null;
+  data: T;
 }
 
 export class RequestModel<T> {

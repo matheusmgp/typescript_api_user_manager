@@ -3,9 +3,9 @@ import { User } from '@src/models/users/user.model';
 import { IGetUserInfoRepository } from '@src/repositories/interfaces/users/getuserinfo-user.interface.repository';
 
 export class GetUserInfoMongoDbRepository implements IGetUserInfoRepository<User> {
-  async getById(id: string): Promise<ResultModel<User>> {
-    const result: ResultModel<User> = {
-      data: await User.findOne({ _id: id }),
+  async getById(id: string): Promise<ResultModel<User | {}>> {
+    const result: ResultModel<User | {}> = {
+      data: (await User.findOne({ _id: id })) ?? {},
     };
 
     return result;

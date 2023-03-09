@@ -20,7 +20,7 @@ export class SignInController {
     try {
       user = await this.repository.findOneByEmail(email);
 
-      if (!user.data) {
+      if (Object.keys(user.data).length === 0) {
         throw new UserNotFoundError('');
       }
       if (!(await AuthService.comparePassword(password, user.data.password))) {

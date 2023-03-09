@@ -8,10 +8,9 @@ export interface UpdateUserData {
   password: string;
 }
 export class UpdateUserMongoDbRepository implements IUpdateUserRepository<User> {
-  async update(id: string, payload: UpdateUserData): Promise<ResultModel<User>> {
-    const updated = await User.findByIdAndUpdate(id, payload);
-    const result: ResultModel<User> = {
-      data: updated,
+  async update(id: string, payload: UpdateUserData): Promise<ResultModel<User | {}>> {
+    const result: ResultModel<User | {}> = {
+      data: (await User.findByIdAndUpdate(id, payload)) ?? {},
     };
     return result;
   }
