@@ -3,12 +3,18 @@ import express, { Application } from 'express';
 import { router } from './routes';
 import config from 'config';
 import * as database from '@src/database/mongo/database';
+import LogService from '@src/logs/log.service';
 
 export class SetupServer {
-  constructor(private port = config.get('App.port'), private app = express()) {}
+  constructor(
+    private port = config.get('App.port'),
+    private readonly logService: LogService,
+    private app = express()
+  ) {}
 
   public async init(): Promise<void> {
     this.app.use(express.json());
+    this.logService.log(this.app, 'express.log');
     this.start();
     this.setRoutes();
     await this.databaseSetup();
