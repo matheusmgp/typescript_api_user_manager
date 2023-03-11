@@ -33,6 +33,9 @@ export class HttpListResponse extends HttpResponse {
   count: number;
 }
 
+/**
+ * Função que retorna uma exception
+ */
 const sendCreateUpdateErrorResponse = (error: mongoose.Error.ValidationError | Error): any => {
   if (error instanceof mongoose.Error.ValidationError) {
     const clientErrors = handleClientErrors(error);
@@ -45,6 +48,9 @@ const sendCreateUpdateErrorResponse = (error: mongoose.Error.ValidationError | E
   }
 };
 
+/**
+ * Função que checa erro de duplicated do mongoose
+ */
 const handleClientErrors = (error: mongoose.Error.ValidationError): { code: number; error: string } => {
   const duplicatedKindErrors = Object.values(error.errors).filter((err) => err.kind === 'DUPLICATED');
   if (duplicatedKindErrors.length) {
@@ -53,14 +59,23 @@ const handleClientErrors = (error: mongoose.Error.ValidationError): { code: numb
   return { code: 422, error: error.message };
 };
 
+/**
+ * Função que retorna uma http response de sucesso
+ */
 const httpResponse = (data: any, method: string, res: Response, statusCode: number) => {
   res.status(statusCode).send(new HttpResponse(statusCode, data, method));
 };
 
+/**
+ * Função que retorna uma http response de exception
+ */
 const httpExceptionResponse = (error: any, method: string, res: Response, statusCode: number) => {
   res.status(statusCode).send(new HttpExceptionResponse(statusCode, error, method));
 };
 
+/**
+ * Função que retorna uma http response de sucesso em array
+ */
 const httpResponseList = (data: any, method: string, res: Response, statusCode: number) => {
   res.status(statusCode).send(new HttpListResponse(statusCode, data.results, method, data.count));
 };
