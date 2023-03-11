@@ -14,7 +14,7 @@ export class SetupServer {
 
   public async init(): Promise<void> {
     this.app.use(express.json());
-    this.logService.log(this.app, 'express.log');
+    this.logService.log(this.app, 'requests');
     this.start();
     this.setRoutes();
     await this.databaseSetup();
