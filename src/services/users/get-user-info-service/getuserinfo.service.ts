@@ -4,9 +4,14 @@ import { IGetUserInfoService } from '@src/services/interfaces/users/getuserinfo.
 import { IdNotFoundError } from '@src/util/errors/id-not-found-error';
 import { IdNotValidError } from '@src/util/errors/id-not-valid-error';
 import { HelperService } from '@src/util/helpers/is-valid-object-id';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export class GetUserInfoService implements IGetUserInfoService<User> {
-  constructor(private readonly repository: IGetUserInfoRepository<User>) {}
+  constructor(
+    @inject('GetUserInfoMongoDbRepository')
+    private readonly repository: IGetUserInfoRepository<User>
+  ) {}
 
   async execute(id: string): Promise<any> {
     if (!HelperService.checkIfObjectIdIsValid(id)) {

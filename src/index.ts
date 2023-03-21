@@ -1,3 +1,6 @@
+import './util/module-alias';
+import 'reflect-metadata';
+import './shared/containers';
 import { SetupServer } from './server/server';
 import config from 'config';
 import LogService from './logs/log.service';

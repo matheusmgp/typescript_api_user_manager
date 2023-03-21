@@ -4,9 +4,14 @@ import { IGetByIdUserService } from '@src/services/interfaces/users/getbyid-user
 import { IdNotFoundError } from '@src/util/errors/id-not-found-error';
 import { IdNotValidError } from '@src/util/errors/id-not-valid-error';
 import { HelperService } from '@src/util/helpers/is-valid-object-id';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export class GetByIdUserService implements IGetByIdUserService<User> {
-  constructor(private readonly repository: IGetByIdUserRepository<User>) {}
+  constructor(
+    @inject('GetByIdUsersMongoDbRepository')
+    private readonly repository: IGetByIdUserRepository<User>
+  ) {}
 
   async execute(id: string): Promise<any> {
     if (!HelperService.checkIfObjectIdIsValid(id)) {

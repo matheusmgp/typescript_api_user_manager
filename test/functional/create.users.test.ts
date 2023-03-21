@@ -15,7 +15,6 @@ describe('User e2e tests', () => {
     const user = await new User(defaultUser).save();
 
     token = AuthService.generateToken(user.toJSON());
-    clearScreenDown;
   });
   describe('When creating a new user', () => {
     beforeAll(async () => await User.deleteMany({}));

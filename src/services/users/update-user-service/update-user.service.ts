@@ -7,6 +7,7 @@ import { UserEmailValidationError } from '@src/util/errors/email-already-exists-
 import { IdNotFoundError } from '@src/util/errors/id-not-found-error';
 import { IdNotValidError } from '@src/util/errors/id-not-valid-error';
 import { HelperService } from '@src/util/helpers/is-valid-object-id';
+import { inject, injectable } from 'tsyringe';
 
 export interface UpdateUserRequest {
   name: string;
@@ -14,9 +15,12 @@ export interface UpdateUserRequest {
   password: string;
 }
 
+@injectable()
 export class UpdateUserService implements IUpdateUserService<User> {
   constructor(
+    @inject('UpdateUserMongoDbRepository')
     private readonly repository: IUpdateUserRepository<User>,
+    @inject('GetByIdUsersMongoDbRepository')
     private readonly getbyidRepository: IGetByIdUserRepository<User>
   ) {}
   async execute(id: string, payload: UpdateUserRequest): Promise<any> {

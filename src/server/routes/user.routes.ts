@@ -1,4 +1,9 @@
 import { HttpResponseService } from '@src/controllers/http-response';
+import { CreateUserController } from '@src/controllers/users/create-user.controller';
+import { GetUserInfoController } from '@src/controllers/users/get-user-info.controller';
+import { GetAllUsersController } from '@src/controllers/users/getall-users.controller';
+import { GetByIdUserController } from '@src/controllers/users/getbyid-users.controller';
+import { UpdateUserController } from '@src/controllers/users/update-user.controller';
 import { paginationSchema } from '@src/controllers/validations/pagination/pagination.validation';
 import {
   userCreateSchema,
@@ -9,7 +14,8 @@ import { validation } from '@src/shared/middleware';
 import { AuthMiddleware } from '@src/shared/middleware/auth.middleware';
 import express, { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { resolveUsersDependencies } from '../../../config/dependency.resolver';
+import { container } from 'tsyringe';
+
 export class UserRoutes {
   public router: Router;
 
@@ -39,8 +45,9 @@ export class UserRoutes {
     };
 
     let result: any;
+    const controller = container.resolve(GetAllUsersController);
     try {
-      result = await resolveUsersDependencies().getallUsersController.handleRequest(pagination);
+      result = await controller.handleRequest(pagination);
       if (result) {
         HttpResponseService.httpResponse(result.data, 'get', res, StatusCodes.OK);
       } else {
@@ -52,8 +59,9 @@ export class UserRoutes {
   }
   private async getById(req: Request, res: Response): Promise<void> {
     let result: any;
+    const controller = container.resolve(GetByIdUserController);
     try {
-      result = await resolveUsersDependencies().getByIdUserController.handleRequest(req.params.id);
+      result = await controller.handleRequest(req.params.id);
 
       if (result) {
         HttpResponseService.httpResponse(result, 'get', res, StatusCodes.OK);
@@ -66,10 +74,10 @@ export class UserRoutes {
   }
   private async getUserInfo(req: Request, res: Response): Promise<void> {
     let result: any;
-
+    const controller = container.resolve(GetUserInfoController);
     try {
       if (req.decoded?.id) {
-        result = await resolveUsersDependencies().getUserInfoController.handleRequest(req.decoded.id);
+        result = await controller.handleRequest(req.decoded.id);
       } else {
         HttpResponseService.httpResponse(result, 'get', res, StatusCodes.NOT_FOUND);
       }
@@ -85,8 +93,9 @@ export class UserRoutes {
   }
   private async create(req: Request, res: Response): Promise<void> {
     let result: any;
+    const controller = container.resolve(CreateUserController);
     try {
-      result = await resolveUsersDependencies().createUserController.handleRequest(req.body);
+      result = await controller.handleRequest(req.body);
 
       HttpResponseService.httpResponse(result.data, 'post', res, StatusCodes.CREATED);
     } catch (err: any) {
@@ -95,8 +104,9 @@ export class UserRoutes {
   }
   private async update(req: Request, res: Response): Promise<void> {
     let result: any;
+    const controller = container.resolve(UpdateUserController);
     try {
-      result = await resolveUsersDependencies().updateUserController.handleRequest(req.params.id, req.body);
+      result = await controller.handleRequest(req.params.id, req.body);
       HttpResponseService.httpResponse(result.data, 'patch', res, StatusCodes.OK);
     } catch (err: any) {
       HttpResponseService.httpExceptionResponse(err.message, 'patch', res, err.code);

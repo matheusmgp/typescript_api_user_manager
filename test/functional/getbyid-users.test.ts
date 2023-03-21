@@ -1,5 +1,7 @@
 import { User } from '@src/models/users/user.model';
 import { AuthService } from '@src/services/auth.service';
+import { ICreateUserService } from '@src/services/interfaces/users/create-users.interface.service';
+import { container } from 'tsyringe';
 
 describe('GetByIdUserController functional tests', () => {
   const defaultUser = {

@@ -4,6 +4,7 @@ import { GetByIdUsersMongoDbRepository } from '@src/repositories/mongodb/users/g
 import { AuthService } from '@src/services/auth.service';
 import { PasswordDoesNotMatchError } from '@src/util/errors/password-does-not-match.error';
 import { UserNotFoundError } from '@src/util/errors/user-not-found.errorr';
+import { inject, injectable } from 'tsyringe';
 
 export interface SignInResponse {
   data: {
@@ -11,8 +12,12 @@ export interface SignInResponse {
     token: string;
   };
 }
+@injectable()
 export class SignInController {
-  constructor(private readonly repository: GetByIdUsersMongoDbRepository) {}
+  constructor(
+    @inject('GetByIdUsersMongoDbRepository')
+    private readonly repository: GetByIdUsersMongoDbRepository
+  ) {}
   public async signIn(id: string, body: any): Promise<SignInResponse> {
     const { email, password } = body;
     let user: any;

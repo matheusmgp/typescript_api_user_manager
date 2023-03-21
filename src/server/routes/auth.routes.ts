@@ -1,7 +1,8 @@
 import { HttpResponseService } from '@src/controllers/http-response';
-import { resolveSignInDependencies } from '../../../config/dependency.resolver';
+import { SignInController } from '@src/controllers/users/auth/signin.controller';
 import express, { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { container } from 'tsyringe';
 
 export class AuthRoutes {
   public router: Router;
@@ -17,8 +18,9 @@ export class AuthRoutes {
 
   private async signIn(req: Request, res: Response): Promise<void> {
     let result: any;
+    const controller = container.resolve(SignInController);
     try {
-      result = await resolveSignInDependencies().siginController.signIn(req.params.id, req.body);
+      result = await controller.signIn(req.params.id, req.body);
 
       HttpResponseService.httpResponse(result.data, 'post', res, StatusCodes.OK);
     } catch (err: any) {

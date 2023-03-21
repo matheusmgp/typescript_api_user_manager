@@ -1,4 +1,3 @@
-import '../util/module-alias';
 import express, { Application } from 'express';
 import { router } from './routes';
 import config from 'config';
