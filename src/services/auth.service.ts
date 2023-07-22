@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 import { User } from '@src/models/users/user.model';
 
+const KEY = 'some-key';
 export interface DecodedUser extends Omit<User, '_id'> {
   id: string;
 }
@@ -24,16 +25,20 @@ const comparePassword = async (password: string, hashedPassword: string): Promis
  * Função para gerar um token JWT
  */
 const generateToken = (payload: any): string => {
-  return jwt.sign(payload, config.get('App.auth.key'), {
-    expiresIn: config.get('App.auth.tokenExpiresIn'),
-  });
+  return jwt.sign(
+    {
+      data: payload,
+    },
+    config.get('App.auth.key') || KEY,
+    { expiresIn: config.get('App.auth.tokenExpiresIn') || 60 * 60 }
+  );
 };
 
 /**
  * Função para DECODIFICAR um token JWT
  */
 const decodeToken = (token: string): DecodedUser => {
-  return jwt.verify(token, config.get('App.auth.key')) as DecodedUser;
+  return jwt.verify(token, config.get('App.auth.key') || KEY) as DecodedUser;
 };
 
 export const AuthService = {
