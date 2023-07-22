@@ -1,6 +1,5 @@
 import { User } from '@src/models/users/user.model';
-import { GetByIdUsersMongoDbRepository } from '@src/repositories/mongodb/users/getbyid-user-repository/getbyid-user.repository';
-
+import { IGetByIdUserRepository } from '@src/repositories/interfaces/users/getbyid-user.interface.repository';
 import { AuthService } from '@src/services/auth.service';
 import { PasswordDoesNotMatchError } from '@src/util/errors/password-does-not-match.error';
 import { UserNotFoundError } from '@src/util/errors/user-not-found.errorr';
@@ -16,7 +15,7 @@ export interface SignInResponse {
 export class SignInController {
   constructor(
     @inject('GetByIdUsersMongoDbRepository')
-    private readonly repository: GetByIdUsersMongoDbRepository
+    private readonly repository: IGetByIdUserRepository<User>
   ) {}
   public async signIn(id: string, body: any): Promise<SignInResponse> {
     const { email, password } = body;

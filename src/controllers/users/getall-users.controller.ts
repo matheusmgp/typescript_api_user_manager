@@ -16,7 +16,6 @@ export class GetAllUsersController {
       limit: Number(limit),
       filter: filter as string,
     };
-    const resp = await this.userService.execute(pagination);
-    return resp;
+    return await this.userService.execute(pagination);
   }
 }

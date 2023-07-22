@@ -9,6 +9,9 @@
     "start:local": "ts-node-dev --transpile-only src/index.ts",
     "test:functional": "jest --projects ./test --runInBand"
   },
+  "engines": {
+    "node": "12.22.12"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

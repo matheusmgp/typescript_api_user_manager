@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
     "target": "es2019",
     "moduleResolution": "node",
     "module": "commonjs",
@@ -24,7 +25,7 @@
       "@test/*": ["./test/*"]
     },
     "rootDirs": ["./src", "./test"],
-    "experimentalDecorators": true,
+
     "emitDecoratorMetadata": true
   },
   "include": ["./src/**/*.ts", "./test/**/*.ts"],
