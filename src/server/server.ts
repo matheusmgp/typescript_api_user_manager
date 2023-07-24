@@ -25,7 +25,7 @@ export class SetupServer {
    */
   public start(): void {
     this.app.listen(this.port, () => {
-      console.info('API running on port: ' + this.port);
+      console.info(` 🚀🚀🚀 API running on port -> ${this.port} 🚀🚀🚀 `);
     });
   }
   /**

@@ -16,13 +16,13 @@ export const validation: TValidation = (schemas) => async (req, res, next) => {
       schema.validateSync(req[key as TProperty], { abortEarly: false });
     } catch (err: any) {
       const errors = err.errors;
-      errorsResult[key] = errors;
+      errorsResult[key] = { errors: errors };
     }
   });
 
   if (Object.entries(errorsResult).length === 0) {
     next();
   } else {
-    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ code: 422, errors: errorsResult });
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ code: 422, validation: errorsResult });
   }
 };
