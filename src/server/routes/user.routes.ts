@@ -12,7 +12,7 @@ import {
 } from '@src/controllers/validations/users/user.validation';
 import { validation } from '@src/shared/middleware';
 import { AuthMiddleware } from '@src/shared/middleware/auth.middleware';
-import express, { Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { container } from 'tsyringe';
 
@@ -25,7 +25,7 @@ export class UserRoutes {
   private updateValidation = validation({ body: userUpdateSchema });
 
   constructor() {
-    this.router = express.Router();
+    this.router = Router();
     this.registerRoutes();
   }
 

@@ -19,6 +19,7 @@ export class SetupServer {
     this.logService.log(this.app, 'requests');
     this.start();
     this.setRoutes();
+    this.databaseSetup();
   }
   /**
    * Função que inicia o server
