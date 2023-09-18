@@ -6,6 +6,7 @@ import { User } from '@src/models/users/user.model';
 const KEY = 'some-key';
 export interface DecodedUser extends Omit<User, '_id'> {
   id: string;
+  data: DecodedUser;
 }
 
 /**

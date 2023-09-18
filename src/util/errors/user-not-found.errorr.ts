@@ -4,6 +4,6 @@ export class UserNotFoundError extends InternalError {
   constructor(message: string) {
     const internalMessage = 'User not found!';
 
-    super(`${internalMessage}`, 401);
+    super(`${internalMessage}`, 404);
   }
 }
